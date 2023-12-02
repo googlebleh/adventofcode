@@ -8,10 +8,15 @@ max_blues = 14
 cum_sum = 0
 
 def check_one(line):
+    min_red = 0
+    min_green = 0
+    min_blue = 0
+
     for round_ in line.split(";"):
         n_red = 0
         n_green = 0
         n_blue = 0
+
         m = re.search(r"(\d+) red", round_)
         if m:
             n_red = int(m.group(1))
@@ -22,13 +27,15 @@ def check_one(line):
         if m:
             n_blue = int(m.group(1))
 
-        # if round_.startswith("Game 4"):
-        #     print(n_red, n_green, n_blue)
+        # if not ((n_red <= max_reds) and (n_green <= max_greens) and (n_blue <= max_blues)):
+        #     return False
 
-        if not ((n_red <= max_reds) and (n_green <= max_greens) and (n_blue <= max_blues)):
-            return False
+        min_red = max(min_red, n_red)
+        min_green = max(min_green, n_green)
+        min_blue = max(min_blue, n_blue)
 
-    return True
+    return min_red * min_green * min_blue
+    # return True
 
 for line in fileinput.input():
     m = re.match(r"Game (\d+):.+", line)
@@ -37,11 +44,15 @@ for line in fileinput.input():
         1/0
     game_id = int(m.group(1))
 
-    if check_one(line):
-        print("yes", game_id)
-        cum_sum += game_id
-    else:
-        print("no", game_id)
+    # if check_one(line):
+    #     # print("yes", game_id)
+    #     cum_sum += game_id
+    # else:
+    #     # print("no", game_id)
+    #     pass
+
+    power = check_one(line)
+    cum_sum += power
 
 
 print(cum_sum)
