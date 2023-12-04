@@ -5,7 +5,11 @@ import re
 
 cum_score = 0
 
-for line in fileinput.input():
+orig_cards = list(fileinput.input())
+copied_cards = {}
+num_copied = 0
+
+for line in orig_cards:
     tokens = line.split()
     state = "winning"
     card_id = None
@@ -15,7 +19,6 @@ for line in fileinput.input():
     for i, e in enumerate(tokens):
         if e == "Card":
             card_id = int(tokens[i+1][:-1])
-            print("set", card_id)
             continue
 
         if card_id is None:
@@ -38,20 +41,34 @@ for line in fileinput.input():
     score = 0
     for n in my_nums:
         if n in winning_nums:
-            if score == 0:
-                score = 1
-            else:
-                score *= 2
+            score += 1
 
-    print(winning_nums)
-    print(my_nums)
-    print(score)
+    for copy_i in range(score):
+        if card_id not in copied_cards:
+            copied_cards[card_id] = []
 
-    cum_score += score
+        num_to_cp = 1
+        for key, value in copied_cards.items():
+            targ = card_id + copy_i + 1
+            # print(f"inner: {key}, {value}, {copy_i}")
+            if card_id in value:
+                x = value.count(card_id)
+                # print("targ in value +=", x)
+                num_to_cp += x
 
-    # print(line)
+        # print(f"for card_id={card_id}, copy_i={copy_i}, num_to_cp={num_to_cp}")
+        v = [card_id+copy_i+1] * num_to_cp
+        copied_cards[card_id].extend(v)
+        num_copied += num_to_cp
 
-print(cum_score)
+        # print(copied_cards)
+
+    # print()
+
+# print("end")
+# print(copied_cards)
+
+print(len(orig_cards) + (num_copied))
 
 
 
