@@ -3,16 +3,13 @@
 import fileinput
 
 def derivative(seq):
-    r = []
-    for i in range(1, len(seq)):
-        r.append(seq[i] - seq[i-1])
-    return r
+    return [seq[i] - seq[i-1] for i in range(1, len(seq))]
 
 def get_next_value(seq):
     if all(e == 0 for e in seq):
         return 0
-    v = get_next_value(derivative(seq))
-    return seq[0] - v
+
+    return seq[0] - get_next_value(derivative(seq))
 
 total = 0
 for line in fileinput.input():
@@ -22,9 +19,3 @@ for line in fileinput.input():
     total += (get_next_value(seq))
 
 print(total)
-    # while True:
-    #     curr.append(seq)
-    #     next_ = derivative(seq)
-    #     if all(e == 0 for e in next_):
-    #
-    #     seq = next_
