@@ -15,4 +15,9 @@ day="${1:-$(TZ=America/New_York date +%-d)}"
 year="${2:-$(date +%Y)}"
 
 read -r aoc_session < "$git_rootdir/session_cookie.txt"
-curl -sLORJ --cookie "session=$aoc_session" "https://adventofcode.com/$year/day/$day/input"
+curl \
+	-sLORJ \
+	--create-dirs \
+	--output-dir "$git_rootdir/$year/$day" \
+	--cookie "session=$aoc_session"
+	"https://adventofcode.com/$year/day/$day/input"
