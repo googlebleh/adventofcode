@@ -12,7 +12,7 @@ def get_next_value(seq):
     if all(e == 0 for e in seq):
         return 0
     v = get_next_value(derivative(seq))
-    return seq[-1] + v
+    return seq[0] - v
 
 total = 0
 for line in fileinput.input():
