@@ -38,3 +38,14 @@ for m in re.finditer(r"\d+", board):
     if is_partnum(m):
         total += int(m.group(0))
 print(total)
+
+def gear_ratio(m):
+    adjacent_numbers = []
+    for x, y in all_adjacent(m.start()):
+        if board[board_i(x, y)].isdigit():
+            adjacent_numbers.append()
+
+total = 0
+for m in re.finditer(r"\*", board):
+    total += gear_ratio(m)
+print(total)

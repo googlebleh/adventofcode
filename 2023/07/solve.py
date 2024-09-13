@@ -87,7 +87,7 @@ for line in fileinput.input():
         1/0
 
 
-strength = [ "A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2" ]
+strength = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2", "J"]
 
 def compare(item1, item2):
     for i, c in enumerate(item1[0]):
